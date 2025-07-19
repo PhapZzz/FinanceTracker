@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface RoleService {
     public List<RoleDTO> getall();
+    public RoleDTO add(RoleDTO roleDTO);
 }

@@ -34,4 +34,10 @@ public class RoleServiceImpl implements RoleService {
                 .collect(Collectors.toList());
 
     }
+
+    @Override
+    public RoleDTO add(RoleDTO roleDTO){
+
+        return roleMapper.toDTO(roleRepository.save(roleMapper.toEntity(roleDTO)));
+    }
 }
