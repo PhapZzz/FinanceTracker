@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class FieldErrorDTO {
+
     private String field;
     private String message;
 
