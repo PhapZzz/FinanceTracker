@@ -16,6 +16,7 @@ public class JwtTokenProvider {
      @Value("${jwt.secret}")
     // Secret key để ký token, nên lưu trong file cấu hình
      private String secretKey;
+
     @Value("${jwt.expiration}")
     // Thời hạn token (ví dụ 1 giờ)
     private long expirationTime;

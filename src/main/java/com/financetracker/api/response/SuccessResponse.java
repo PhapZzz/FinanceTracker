@@ -28,8 +28,10 @@ public class SuccessResponse<T> {
 
     public static <T> SuccessResponse<T> of(final T data, String message) {
         return SuccessResponse.<T>builder()
+
                 .data(data)
                 .message(message)
+
                 .build();
     }
 
