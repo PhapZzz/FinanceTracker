@@ -1,4 +1,5 @@
-package com.financetracker.api.Jwt;
+package com.financetracker.api.security;
 
 public class JwtTokenFilter {
+
 }

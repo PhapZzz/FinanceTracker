@@ -1,4 +1,4 @@
-package com.financetracker.api.dto;
+package com.financetracker.api.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -24,6 +24,7 @@ public class RegisterRequest {
             message = "Password must be contain both letters and numbers")
     @Size(min = 8, message = "Mật khẩu phải có ít nhất 8 ký tự.")
     private String password;
+
 
 
     private Long roleId; // Optional nếu mặc định USER

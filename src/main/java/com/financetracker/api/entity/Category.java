@@ -28,7 +28,8 @@ public class Category {
     @Column(name = "category_name", nullable = false)
     private String name;
 
-    @Column(name = "type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, unique = true)
     private CategoryType type;
 
     @Column (length = 10)

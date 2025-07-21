@@ -22,6 +22,7 @@ import lombok.Setter;
 @Builder
 
 public class SuccessResponse<T> {
+
     private final String success = "success";
     private T data;
     private String message;

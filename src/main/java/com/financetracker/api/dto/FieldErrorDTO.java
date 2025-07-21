@@ -1,4 +1,4 @@
-package com.financetracker.api.response;
+package com.financetracker.api.dto;
 
 
 import lombok.AllArgsConstructor;
