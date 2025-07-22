@@ -1,4 +1,4 @@
-package com.financetracker.api.Jwt;
+package com.financetracker.api.security.Jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -12,7 +12,7 @@ import java.util.Date;
 public class JwtService {
 
 
-    private static final long EXPIRE_DURATION = 60000; // 86.400s = 1 ngày ,1 phut = 60 giay = 60000mili
+    private static final long EXPIRE_DURATION = 900000; // 86.400s = 1 ngày ,1 phut = 60 giay = 60000mili
 
     private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 

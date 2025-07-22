@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-@JsonInclude(JsonInclude.Include.NON_NULL) // ✅ Thêm dòng này
+@JsonInclude(JsonInclude.Include.NON_NULL) 
 public class ErrorResponse {
 
     private final String success = "false";

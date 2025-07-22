@@ -1,6 +1,6 @@
 package com.financetracker.api.service;
 
-import com.financetracker.api.Jwt.JwtTokenUtil;
+import com.financetracker.api.security.Jwt.util.JwtTokenUtil;
 import com.financetracker.api.request.LoginRequest;
 import com.financetracker.api.request.RegisterRequest;
 import com.financetracker.api.entity.Role;
@@ -66,7 +66,7 @@ public class UserService {
 
 
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
-            throw new AppException("Email đã tồn tại trong hệ thống.");
+            throw new AppException("Email is already registered",HttpStatus.CONFLICT);
         }
 
         Role role = roleRepository.findByName(RoleName.USER)
@@ -139,7 +139,7 @@ public class UserService {
             }
 
             userRepository.save(user);
-            throw new AppException("Email or password is incorrect", HttpStatus.UNAUTHORIZED);
+            throw new AppException("Invalid email or password", HttpStatus.UNAUTHORIZED);
         }
 
         // ✅ Nếu email chưa xác thực
@@ -158,7 +158,7 @@ public class UserService {
 
         return LoginResponse.builder()
                 .accessToken(token)
-                .expiresToken(expiresToken)
+                .expire(expiresToken)
                 .build();
     }
 }

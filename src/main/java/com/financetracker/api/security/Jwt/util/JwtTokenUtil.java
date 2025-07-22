@@ -1,4 +1,4 @@
-package com.financetracker.api.Jwt;
+package com.financetracker.api.security.Jwt.util;
 
 import com.financetracker.api.entity.User;
 import com.financetracker.api.exception.JwtAuthenticationException;

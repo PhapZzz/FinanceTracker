@@ -1,12 +1,11 @@
 package com.financetracker.api.exception;
 
-import com.financetracker.api.response.ErrorResponse;
 import com.financetracker.api.dto.FieldErrorDTO;
+import com.financetracker.api.response.ErrorResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -28,7 +27,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         List<FieldErrorDTO> errorList = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
-                .map(err -> new FieldErrorDTO(err.getField(), err.getDefaultMessage()))
+                .map(err -> new FieldErrorDTO
+                        (err.getField(),
+                                err.getDefaultMessage() )
+                      )
+                .distinct()
                 .collect(Collectors.toList());
 
         ErrorResponse response = ErrorResponse.of("Validation failed", errorList);

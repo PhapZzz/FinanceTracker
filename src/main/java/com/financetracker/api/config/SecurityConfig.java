@@ -1,10 +1,10 @@
 package com.financetracker.api.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.financetracker.api.Jwt.JwtTokenUtil;
+import com.financetracker.api.security.Jwt.util.JwtTokenUtil;
 import com.financetracker.api.repository.UserRepository;
 import com.financetracker.api.security.CustomUserDetailsService;
-import com.financetracker.api.security.JwtAuthenticationFilter;
+import com.financetracker.api.security.Jwt.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

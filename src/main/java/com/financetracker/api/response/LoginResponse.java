@@ -1,6 +1,5 @@
 package com.financetracker.api.response;
 
-import com.financetracker.api.entity.Role;
 import lombok.*;
 
 import java.time.Instant;
@@ -13,7 +12,6 @@ import java.time.Instant;
 public class LoginResponse {
 
     private String accessToken;
-
-    private Instant expiresToken;
+    private Instant expire;
 
 }

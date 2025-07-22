@@ -1,4 +1,4 @@
-package com.financetracker.api.security;
+package com.financetracker.api.security.Jwt.util;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

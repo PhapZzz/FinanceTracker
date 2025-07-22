@@ -1,4 +1,4 @@
-package com.financetracker.api.security;
+package com.financetracker.api.security.Jwt.util;
 
 import java.security.SecureRandom;
 import java.util.Base64;

@@ -12,17 +12,18 @@ import lombok.*;
 @AllArgsConstructor
 public class RegisterRequest {
 
-    @NotBlank(message = "Họ tên không được để trống.")
+    @NotBlank(message = "Full name is required")
     private String fullName;
 
-    @NotBlank(message = "Email không được để trống.")
-    @Email(message = "Email không đúng định dạng.")
+    @NotBlank(message = "Invalid email format")
+    @Email(message = "Invalid email format")
     private String email;
 
-    @NotBlank(message = "Mật khẩu không được để trống.")
+    @NotBlank(message = "Password must be at least 8 characters and contain both letters and numbers")
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$",
-            message = "Password must be contain both letters and numbers")
-    @Size(min = 8, message = "Mật khẩu phải có ít nhất 8 ký tự.")
+            message = "Password must be at least 8 characters and contain both letters and numbers")
+
+    @Size(min = 8, message ="Password must be at least 8 characters and contain both letters and numbers")
     private String password;
 
 
