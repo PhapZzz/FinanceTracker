@@ -13,10 +13,12 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
 
     // ✅ Xử lý lỗi @Valid thông qua override thay vì @ExceptionHandler
     @Override
@@ -28,9 +30,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .getFieldErrors()
                 .stream()
                 .map(err -> new FieldErrorDTO
-                        (err.getField(),
-                                err.getDefaultMessage() )
-                      )
+                        (
+                                err.getField(),
+                                err.getDefaultMessage())
+                )
                 .distinct()
                 .collect(Collectors.toList());
 
@@ -42,8 +45,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(AppException.class)
     public ResponseEntity<ErrorResponse> handleAppException(AppException ex) {
         HttpStatus status = ex.getStatus() != null
-                                            ? ex.getStatus()
-                                            : HttpStatus.UNAUTHORIZED;
+                ? ex.getStatus()
+                : HttpStatus.UNAUTHORIZED;
 
         ErrorResponse response = ErrorResponse.of(ex.getMessage(), null);
         return new ResponseEntity<>(response, status);
@@ -84,12 +87,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-//    @ExceptionHandler(Exception.class)
+    //    @ExceptionHandler(Exception.class)
 //    public ResponseEntity<Object> handleOtherExceptions(Exception ex) {
 //        Map<String, Object> body = new HashMap<>();
 //        body.put("success", false);
 //        body.put("message", "Internal Server Error");
 //        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
 //    }
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<?> handleNotFound(ResourceNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                Map.of("success", false, "message", ex.getMessage())
+        );
+    }
+
 
 }

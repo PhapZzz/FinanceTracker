@@ -55,16 +55,18 @@ public class JwtTokenUtil {
         try {
             parseClaims(token);
             return true;
-        } catch (ExpiredJwtException | MalformedJwtException | SignatureException |
-                 UnsupportedJwtException | IllegalArgumentException e) {
+        } catch (Exception e) {
+            System.out.println("JWT validation failed: " + e.getMessage()); // ➕ log lỗi ra console
             return false;
         }
     }
 
+
     // Hoặc ném lỗi chi tiết
-    public void validateTokenOrThrow(String token) {
+    public boolean validateTokenOrThrow(String token) {
         try {
             parseClaims(token);
+            return true;
         } catch (ExpiredJwtException e) {
             throw new JwtAuthenticationException("Token has expired", HttpStatus.UNAUTHORIZED);
         } catch (MalformedJwtException e) {
@@ -74,6 +76,7 @@ public class JwtTokenUtil {
         } catch (IllegalArgumentException e) {
             throw new JwtAuthenticationException("Missing access token", HttpStatus.UNAUTHORIZED);
         }
+
     }
 
     // giải mã token để lấy thông tin user

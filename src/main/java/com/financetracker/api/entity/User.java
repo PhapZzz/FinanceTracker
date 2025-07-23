@@ -28,8 +28,6 @@ public class User {
     private String fullName;
 
 
-
-
     @Column(nullable = false, unique = true, length = 255)
     private String email;
 
@@ -40,7 +38,7 @@ public class User {
     private String avatar; // URL ảnh
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id", nullable = false,referencedColumnName = "role_id")
+    @JoinColumn(name = "role_id", nullable = false, referencedColumnName = "role_id")
     private Role role;
 
     @Column(name = "created_at", updatable = false)
@@ -70,13 +68,11 @@ public class User {
     }
 
 
-
     @Column(name = "failed_attempts")
     private int failedAttempts = 0;
 
     @Column(name = "account_locked_until")
     private LocalDateTime accountLockedUntil;
-
 
 
 }

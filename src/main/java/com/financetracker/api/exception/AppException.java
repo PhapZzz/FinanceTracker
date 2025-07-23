@@ -1,10 +1,7 @@
 package com.financetracker.api.exception;
 
-import com.financetracker.api.response.ErrorResponse;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @Getter
 public class AppException extends RuntimeException {
@@ -20,10 +17,10 @@ public class AppException extends RuntimeException {
         super(message);
         this.status = status;
     }
-    @ExceptionHandler(AppException.class)
-    public ResponseEntity<ErrorResponse> handleAppException(AppException ex) {
-        return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body(ErrorResponse.of(ex.getMessage(), null));
-    }
+//    @ExceptionHandler(AppException.class)
+//    public ResponseEntity<ErrorResponse> handleAppException(AppException ex) {
+//        return ResponseEntity.status(HttpStatus.CONFLICT)
+//                .body(ErrorResponse.of(ex.getMessage(), null));
+//    }
 
 }
