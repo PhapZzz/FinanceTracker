@@ -29,7 +29,7 @@ public class Category {
     private String name;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = false)
 //    @Column(name = "type", nullable = false)
     private CategoryType type;
 
