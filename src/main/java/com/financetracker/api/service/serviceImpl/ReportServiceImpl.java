@@ -2,7 +2,6 @@ package com.financetracker.api.service.serviceImpl;
 
 import com.financetracker.api.dto.*;
 import com.financetracker.api.repository.SummaryRepository;
-import com.financetracker.api.security.Jwt.JwtService;
 import com.financetracker.api.security.Jwt.util.JwtTokenUtil;
 import com.financetracker.api.service.ReportService;
 import com.itextpdf.io.image.ImageData;
@@ -19,7 +18,9 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -31,13 +32,13 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.text.DecimalFormat;
 import java.time.Month;
 import java.time.format.TextStyle;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -84,16 +85,17 @@ public class ReportServiceImpl implements ReportService {
                 })
                 .toList();
 
-        ChartItemDTO chartItemDTO = chartItems.stream()
+        ChartItemResponseDTO chartItemDTORepon = chartItems.stream()
                 .filter(item -> item.getMonth().equals(getMonthName(monthtxt)))
                 .findFirst()
-                .orElse(new ChartItemDTO(getMonthYearName(monthtxt, year), 0.0, 0.0)); // fallback nếu không có dữ liệu
+                .map(item -> new ChartItemResponseDTO(item.getMonth(), item.getIncome(), item.getExpense()))
+                .orElse(new ChartItemResponseDTO(getMonthName(monthtxt), 0.0, 0.0)); // fallback nếu không có dữ liệu
 
 
 
-        chartItemDTO.setMonth(getMonthYearName(monthtxt,year));
+        chartItemDTORepon.setMonth(getMonthYearName(monthtxt,year));
 
-        return new MonthlyReportDTO(chartItems,chartItemDTO);
+        return new MonthlyReportDTO(chartItems,chartItemDTORepon);
     }
 
     @Override
@@ -116,7 +118,7 @@ public class ReportServiceImpl implements ReportService {
                 })
                 .filter(item -> item.getMonth().equals(formatMonth(monthtxt)))
                 .findFirst()
-                .orElse(null);
+                .orElse(new ChartItemDTO(getMonthYearName(monthtxt, year), 0.0, 0.0));
 
         return new SummaryReportDTO(chartItemDTO.getMonth(), year, chartItemDTO.getIncome(), chartItemDTO.getExpense(), topCategoryExpensesList);
 
@@ -155,25 +157,23 @@ public class ReportServiceImpl implements ReportService {
                 ChartItemDTO chartItemDTOnow = chartItems.stream()
                         .filter(item -> item.getMonth().equals(getMonthName(currentMonth)))
                         .findFirst()
-                        .orElse(null);
+                        .orElse(new ChartItemDTO(getMonthYearName(currentMonth, currentYear), 0.0, 0.0));
                 chartItemDTOnow.setMonth(getMonthYearName(currentMonth,currentYear));
 
                 ChartItemDTO chartItemDTObefore =chartItems.stream()
                         .filter(item -> item.getMonth().equals(getMonthName(previousMonth)))
                         .findFirst()
-                        .orElse(null);
+                        .orElse(new ChartItemDTO(getMonthYearName(previousMonth, previousYear), 0.0, 0.0));
                 chartItemDTObefore.setMonth(getMonthYearName(previousMonth,previousYear));
-
-                // Tạo tên file PDF
+// Tạo tên file PDF
                 String baseFileName = "user" + userid + "_summary_" + request.getMonth() + "_" + request.getYear() + ".pdf";
 
-                // Tạo thư mục lưu file
-//                String folderPath = new File("src/main/resources/static/reports").getAbsolutePath();
+// Tạo thư mục lưu file ở ngoài static
                 String folderPath = new File("uploads/reports").getAbsolutePath();
                 File folder = new File(folderPath);
                 if (!folder.exists()) folder.mkdirs();
 
-                // Xử lý trùng tên file: thêm (1), (2), ...
+// Xử lý trùng tên file: thêm (1), (2), ...
                 String fullPath = getAvailableFilePath(folderPath, baseFileName);
 
                 try {
@@ -182,20 +182,67 @@ public class ReportServiceImpl implements ReportService {
                     throw new RuntimeException("Error generating PDF: " + e.getMessage(), e);
                 }
 
-                // Lấy tên file công khai
+// Trả về đường dẫn API để tải file
                 String fileNamePublic = new File(fullPath).getName();
-                String publicURL = "/reports/" + fileNamePublic;
+                String publicURL = "/api/reports/download/" + fileNamePublic;
 
-                return "http://localhost:8080" + publicURL;
+                return "http://localhost:8080"+ publicURL;
             }
 
             case MONTHLY -> {
-                return null;
+                MonthlyReportDTO monthlyReportDTO = getMonthlyReportbyYear(request.getYear(),request.getMonth());
+                // Tạo tên file PDF
+                String baseFileName = "user" + userid + "_monthly_" + request.getMonth() + "_" + request.getYear() + ".pdf";
+
+// Tạo thư mục lưu file ở ngoài static
+                String folderPath = new File("uploads/reports").getAbsolutePath();
+                File folder = new File(folderPath);
+                if (!folder.exists()) folder.mkdirs();
+
+// Xử lý trùng tên file: thêm (1), (2), ...
+                String fullPath = getAvailableFilePath(folderPath, baseFileName);
+
+                try {
+                    generatePdfWithCharttypeMONTHLY(monthlyReportDTO,request,fullPath);
+                } catch (Exception e) {
+                    throw new RuntimeException("Error generating PDF: " + e.getMessage(), e);
+                }
+
+// Trả về đường dẫn API để tải file
+                String fileNamePublic = new File(fullPath).getName();
+                String publicURL = "/api/reports/download/" + fileNamePublic;
+
+                return "http://localhost:8080"+ publicURL;
+
             }
 
 
             case CATEGORY -> {
-                return null;
+                List<TopCategoryIncome> income = summaryRepository.getTopCategoryImcome(userid, request.getMonth(), request.getYear());
+                List<TopCategoryExpenses> expenses = summaryRepository.getTopCategoryExpenses(userid, request.getMonth(), request.getYear());
+
+                // Tạo tên file PDF
+                String baseFileName = "user" + userid + "_category_" + request.getMonth() + "_" + request.getYear() + ".pdf";
+
+// Tạo thư mục lưu file ở ngoài static
+                String folderPath = new File("uploads/reports").getAbsolutePath();
+                File folder = new File(folderPath);
+                if (!folder.exists()) folder.mkdirs();
+
+// Xử lý trùng tên file: thêm (1), (2), ...
+                String fullPath = getAvailableFilePath(folderPath, baseFileName);
+
+                try {
+                    generatePdfWithCharttypeCATEGORY(expenses,income,request,fullPath);
+                } catch (Exception e) {
+                    throw new RuntimeException("Error generating PDF: " + e.getMessage(), e);
+                }
+
+// Trả về đường dẫn API để tải file
+                String fileNamePublic = new File(fullPath).getName();
+                String publicURL = "/api/reports/download/" + fileNamePublic;
+
+                return "http://localhost:8080"+ publicURL;
             }
 
             default -> throw new IllegalArgumentException("Unsupported report type: " + request.getReportType());
@@ -222,7 +269,7 @@ public class ReportServiceImpl implements ReportService {
         return file.getAbsolutePath();
     }
 
-    //tạo PDF
+    //tạo PDF type SUMMARY
     public static void generatePdfWithCharts(
             ChartItemDTO expensemonth,
             List<TopCategoryExpenses> allExpenses  ,
@@ -391,6 +438,110 @@ public class ReportServiceImpl implements ReportService {
 
     }
 
+    //PDF type MONTHLY
+    public static void generatePdfWithCharttypeMONTHLY(
+            MonthlyReportDTO monthly  ,
+            ReportExportRequest request,
+            String outputPath
+    )throws Exception {
+        List<ChartItemDTO> list = monthly.getCharts();
+
+        PdfWriter writer = new PdfWriter(outputPath);
+        PdfDocument pdf = new PdfDocument(writer);
+        Document document = new Document(pdf);
+        document.add(new Paragraph("📊 Financial MONTHLY Report "+ '"' + request.getYear() + '"')
+                .setFontSize(28).setBold().setTextAlignment(TextAlignment.CENTER));
+        document.add(new Paragraph(" "));
+        document.add(new Paragraph(" "));
+        document.add(new Paragraph(" "));
+        document.add(new Paragraph(" "));
+
+        document.add(new Paragraph("Monthly Report").setFontSize(18).setBold());
+        // Tổng hợp
+        float[] columnWidths = {100F, 200F,200F};
+        Table table = new Table(columnWidths);
+
+        Cell header1 = new Cell().add(new Paragraph("Month").setBold())
+                .setBackgroundColor(ColorConstants.LIGHT_GRAY);
+        Cell header2 = new Cell().add(new Paragraph("Income").setBold())
+                .setBackgroundColor(ColorConstants.LIGHT_GRAY);
+        Cell header3 = new Cell().add(new Paragraph("Expense").setBold())
+                .setBackgroundColor(ColorConstants.LIGHT_GRAY);
+        table.addHeaderCell(header1);
+        table.addHeaderCell(header2);
+        table.addHeaderCell(header3);
+
+        for (ChartItemDTO item : list) {
+            table.addCell( item.getMonth() );
+            table.addCell(formatUSD(item.getIncome()));
+            table.addCell(formatUSD(item.getExpense()));
+
+        }
+        document.add(table);
+        // vẽ biểu đồ
+        if(request.getIncludeChart()){
+            document.add(new Paragraph("BarChart").setFontSize(18).setBold());
+            BufferedImage barChart = createBarChartFor12Months(list);
+            ByteArrayOutputStream chartStream = new ByteArrayOutputStream();
+            ImageIO.write(barChart, "png", chartStream);
+            ImageData chartData = ImageDataFactory.create(chartStream.toByteArray());
+            document.add(new Image(chartData));
+        }
+        document.close();
+
+    }
+
+
+    public static void generatePdfWithCharttypeCATEGORY(
+            List<TopCategoryExpenses> categoryExpenses  ,
+            List<TopCategoryIncome> categoryIncome,
+            ReportExportRequest request,
+            String outputPath
+    )throws Exception {
+        PdfWriter writer = new PdfWriter(outputPath);
+        PdfDocument pdf = new PdfDocument(writer);
+        Document document = new Document(pdf);
+        document.add(new Paragraph("📊 Financial CATEGORY Report "+ '"' + getMonthYearName(request.getMonth(), request.getYear()) + '"')
+            .setFontSize(28).setBold().setTextAlignment(TextAlignment.CENTER));
+        document.add(new Paragraph("Report EXPENSE").setFontSize(18).setBold());
+        if(request.getIncludeChart()){
+            document.add(new Paragraph("Pie Chart").setFontSize(18).setBold());
+            Map<String, Double> topExpensesMap = categoryExpenses.stream()
+                    .collect(Collectors.toMap(
+                            TopCategoryExpenses::getCategory,
+                            TopCategoryExpenses::getAmount
+                    ));
+
+            BufferedImage Chart = createPieChart(topExpensesMap);
+            ByteArrayOutputStream chartStream = new ByteArrayOutputStream();
+            ImageIO.write(Chart, "png", chartStream);
+            ImageData chartData = ImageDataFactory.create(chartStream.toByteArray());
+            document.add(new Image(chartData));
+        }
+        document.add(new AreaBreak() );
+        document.add(new Paragraph("Report INCOME").setFontSize(18).setBold());
+
+
+        if(request.getIncludeChart()){
+            document.add(new Paragraph("Pie Chart").setFontSize(18).setBold());
+
+            Map<String, Double> topExpensesMap = categoryIncome.stream()
+                    .collect(Collectors.toMap(
+                            TopCategoryIncome::getCategory,
+                            TopCategoryIncome::getAmount
+                    ));
+
+            BufferedImage Chart = createPieChart(topExpensesMap);
+            ByteArrayOutputStream chartStream = new ByteArrayOutputStream();
+            ImageIO.write(Chart, "png", chartStream);
+            ImageData chartData = ImageDataFactory.create(chartStream.toByteArray());
+            document.add(new Image(chartData));
+        }
+
+        document.close();
+
+
+    }
 
 
     //bieu do cot
@@ -428,14 +579,58 @@ public class ReportServiceImpl implements ReportService {
         return chart.createBufferedImage(500, 300); // tăng kích thước cho rõ
     }
 
+    public static BufferedImage createBarChartFor12Months(List<ChartItemDTO> monthlyDataList) {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        for (ChartItemDTO data : monthlyDataList) {
+            dataset.addValue(data.getIncome(), "Income", data.getMonth());
+            dataset.addValue(data.getExpense(), "Expense", data.getMonth());
+        }
+
+        JFreeChart chart = ChartFactory.createBarChart(
+                "Monthly Income vs Expense",   // chart title
+                "Month",                       // X-axis label
+                "Amount ($)",                  // Y-axis label
+                dataset,
+                PlotOrientation.VERTICAL,
+                true, true, false); // show legend, tooltips, urls
+
+        CategoryPlot plot = chart.getCategoryPlot();
+        plot.setBackgroundPaint(Color.WHITE);
+        plot.setRangeGridlinePaint(Color.GRAY);
+
+        // Customize bar colors
+        BarRenderer renderer = (BarRenderer) plot.getRenderer();
+        renderer.setSeriesPaint(0, new Color(91, 155, 213)); // Income
+        renderer.setSeriesPaint(1, new Color(237, 125, 49)); // Expense
+        renderer.setMaximumBarWidth(0.1);
+
+        // Rotate category labels for better readability
+        CategoryAxis domainAxis = plot.getDomainAxis();
+        domainAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
+
+        // Set title font
+        chart.getTitle().setFont(new Font("SansSerif", Font.BOLD, 16));
+
+        return chart.createBufferedImage(800, 400);
+    }
+
+
+
+
+
 
 //bieu do tron
-    public BufferedImage createPieChart(Map<String, Double> topExpenses) {
+    public static BufferedImage createPieChart(Map<String, Double> topExpenses) {
         DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
         topExpenses.forEach(dataset::setValue);
 
         JFreeChart chart = ChartFactory.createPieChart(
-                "Top Expenses", dataset, true, true, false);
+                "", dataset, true, true, false);
+// tính %
+        PiePlot<String> plot = (PiePlot<String>) chart.getPlot();
+        plot.setLabelGenerator(new StandardPieSectionLabelGenerator(
+                "{0}: {1} ({2})", new DecimalFormat("###,##0"), new DecimalFormat("0.00%")));
 
         return chart.createBufferedImage(500, 300);
     }

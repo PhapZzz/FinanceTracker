@@ -1,6 +1,5 @@
 package com.financetracker.api.dto;
 
-import com.financetracker.api.repository.SummaryRepository;
 import lombok.*;
 
 import java.util.List;
@@ -12,5 +11,5 @@ import java.util.List;
 @Builder
 public class MonthlyReportDTO {
     private List<ChartItemDTO> charts;
-    private ChartItemDTO summary;
+    private ChartItemResponseDTO summary;
 }

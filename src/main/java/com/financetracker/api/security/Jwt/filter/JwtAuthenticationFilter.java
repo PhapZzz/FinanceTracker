@@ -34,11 +34,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String path = request.getServletPath();
 
         // Bỏ qua xác thực token cho các endpoint công khai
-        if (path.equals("/api/auth/register") || path.equals("/api/auth/login")) {
+        if (path.equals("/api/auth/register") || path.equals("/api/auth/login") || path.startsWith("/api/reports")) {
             filterChain.doFilter(request, response);
             return;
         }
-
+        // bắt lỗi nếu không có authHeader
         String authHeader = request.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             handleError(response, "Missing access token", HttpStatus.UNAUTHORIZED);
