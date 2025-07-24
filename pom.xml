@@ -109,6 +109,21 @@
 		<artifactId>spring-security-test</artifactId>
 		 <scope>test</scope>
 		 </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<version>5.0.0</version> <!-- hoặc version khác phù hợp -->
+			<scope>provided</scope>
+		</dependency>
+		<!-- Spring Boot Security + JWT -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 
 		<!-- iText 7 Core -->
 		<dependency>
@@ -124,7 +139,10 @@
 			<artifactId>jfreechart</artifactId>
 			<version>1.5.3</version>
 		</dependency>
+
 	</dependencies>
+
+
 
 	<build>
 		<plugins>

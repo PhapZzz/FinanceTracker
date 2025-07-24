@@ -1,4 +1,4 @@
-package com.financetracker.api.security;
+package com.financetracker.api.security.Jwt.util;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -16,6 +16,7 @@ public class JwtTokenProvider {
      @Value("${jwt.secret}")
     // Secret key để ký token, nên lưu trong file cấu hình
      private String secretKey;
+
     @Value("${jwt.expiration}")
     // Thời hạn token (ví dụ 1 giờ)
     private long expirationTime;

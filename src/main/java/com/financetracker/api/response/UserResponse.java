@@ -1,19 +1,20 @@
 package com.financetracker.api.response;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class FieldErrorDTO {
-    private String field;
-    private String message;
+public class UserResponse {
 
+    private Long userId;
+    private String fullName;
+    private String email;
 
 }

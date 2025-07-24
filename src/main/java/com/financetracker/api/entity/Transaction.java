@@ -1,5 +1,6 @@
 package com.financetracker.api.entity;
 
+import com.financetracker.api.enums.CategoryType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
@@ -44,6 +45,10 @@ public class Transaction {
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CategoryType type;
 
     @PrePersist
     protected void onCreate() {

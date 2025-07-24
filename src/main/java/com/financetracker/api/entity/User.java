@@ -27,6 +27,7 @@ public class User {
     @Column(name = "full_name", nullable = false, length = 255)
     private String fullName;
 
+
     @Column(nullable = false, unique = true, length = 255)
     private String email;
 
@@ -37,7 +38,7 @@ public class User {
     private String avatar; // URL ảnh
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id", nullable = false,referencedColumnName = "role_id")
+    @JoinColumn(name = "role_id", nullable = false, referencedColumnName = "role_id")
     private Role role;
 
     @Column(name = "created_at", updatable = false)
@@ -56,10 +57,22 @@ public class User {
     @OneToOne(mappedBy = "user")
     private NotificationSettings notificationSettings;
 
+    @Column(name = "is_verified", nullable = false)
+    private boolean isVerified = false;
+
     //Trước khi insert (save entity mới)
     // được tạo khi insert
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
+
+
+    @Column(name = "failed_attempts")
+    private int failedAttempts = 0;
+
+    @Column(name = "account_locked_until")
+    private LocalDateTime accountLockedUntil;
+
+
 }
