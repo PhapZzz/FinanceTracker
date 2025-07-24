@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 public class BudgetService {
 
 
-
     private final BudgetRepository budgetRepository;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
@@ -43,11 +42,11 @@ public class BudgetService {
         //tìm category có tồn tại
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
-        //so sánh category 
+        //so sánh category coi có dính usser
         if (!category.getUser().getId().equals(userId)) {
             throw new AccessDeniedException("Category does not belong to the current user");
         }
-
+        //coi category và icon dính nhau
         if (category.getCategoryIcon().getType() != CategoryType.EXPENSE) {
             throw new IllegalArgumentException("Only EXPENSE categories can have budgets");
         }
@@ -55,16 +54,22 @@ public class BudgetService {
         // Nếu đã tồn tại ngân sách → cập nhật
         Budget budget = budgetRepository
                 .findByCategoryIdAndUserIdAndMonthAndYear(request.getCategoryId(), userId, request.getMonth(), request.getYear())
-                .map(existing -> {
-                    existing.setAmount(request.getAmount());
-                    return existing;
-                })
-                .orElseGet(() -> Budget.builder()
+                .map(
+                        existing ->
+                        {
+                            existing.setAmount(request.getAmount());
+                            return existing;
+                        }
+                )
+                .orElseGet(() -> Budget
+                        .builder()
+
                         .category(category)
                         .user(user)
                         .amount(request.getAmount())
                         .month(request.getMonth())
                         .year(request.getYear())
+
                         .build()
                 );
 
@@ -88,10 +93,12 @@ public class BudgetService {
      */
     @Transactional
     public BudgetResponse updateBudget(Long budgetId, UpdateBudgetRequest request, Long userId) {
+
         Budget budget = budgetRepository.findByIdAndUserId(budgetId, userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Budget not found"));
 
         budget.setAmount(request.getAmount());
+
         budgetRepository.save(budget);
         return budgetMapper.toResponse(budget);
     }

@@ -30,9 +30,10 @@ public class BudgetController {
     public ResponseEntity<?> addOrUpdateBudget(@Valid @RequestBody BudgetRequest request,
                                                @AuthenticationPrincipal CustomUserDetails userDetails) {
         BudgetResponse response = budgetService.addOrUpdateBudget(request, userDetails.getUser().getId());
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                ApiResponse.success("Budget saved successfully", response)
-        );
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(ApiResponse.success("Budget saved successfully", response)
+                );
     }
 
     /**
@@ -44,9 +45,9 @@ public class BudgetController {
                                                       @RequestParam int year,
                                                       @AuthenticationPrincipal CustomUserDetails userDetails) {
         List<BudgetResponse> budgets = budgetService.getBudgetsByMonthAndYear(userDetails.getUser().getId(), month, year);
-        return ResponseEntity.ok(
-                ApiResponse.success("Budget list fetched successfully", budgets)
-        );
+        return ResponseEntity
+                .ok(ApiResponse.success("Budget list fetched successfully", budgets)
+                );
     }
 
     /**
@@ -58,9 +59,9 @@ public class BudgetController {
                                           @Valid @RequestBody UpdateBudgetRequest request,
                                           @AuthenticationPrincipal CustomUserDetails userDetails) {
         BudgetResponse response = budgetService.updateBudget(id, request, userDetails.getUser().getId());
-        return ResponseEntity.ok(
-                ApiResponse.success("Budget updated successfully", response)
-        );
+        return ResponseEntity
+                .ok(ApiResponse.success("Budget updated successfully", response)
+                );
     }
 
     /**
@@ -70,7 +71,11 @@ public class BudgetController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteBudget(@PathVariable Long id,
                                           @AuthenticationPrincipal CustomUserDetails userDetails) {
+
         budgetService.deleteBudget(id, userDetails.getUser().getId());
-        return ResponseEntity.noContent().build(); // 204 No Content
+
+        return ResponseEntity
+                .noContent()
+                .build(); // 204 No Content
     }
 }
