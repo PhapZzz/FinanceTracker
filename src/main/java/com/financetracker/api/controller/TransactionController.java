@@ -24,7 +24,9 @@ public class TransactionController {
     @PostMapping
     public ResponseEntity<?> addTransaction(@Valid @RequestBody TransactionRequest request,
                                             @AuthenticationPrincipal CustomUserDetails userDetails) {
-        TransactionResponse response = transactionService.addTransaction(request, userDetails.getUser().getId());
+        TransactionResponse response = transactionService
+                                        .addTransaction(request, userDetails.getUser().getId());
+
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 ApiResponse.success("Transaction added successfully", response)
         );

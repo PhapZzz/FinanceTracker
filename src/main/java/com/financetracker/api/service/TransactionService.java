@@ -3,7 +3,6 @@ package com.financetracker.api.service;
 import com.financetracker.api.entity.Category;
 import com.financetracker.api.entity.Transaction;
 import com.financetracker.api.entity.User;
-import com.financetracker.api.enums.CategoryType;
 import com.financetracker.api.exception.ResourceNotFoundException;
 import com.financetracker.api.mapper.TransactionMapper;
 import com.financetracker.api.repository.CategoryRepository;
@@ -19,7 +18,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 
-
 @Service
 @RequiredArgsConstructor
 public class TransactionService {
@@ -27,6 +25,7 @@ public class TransactionService {
     private final CategoryRepository categoryRepository;
     private final TransactionMapper transactionMapper;
     private final UserRepository userRepository;
+
 
     public TransactionResponse addTransaction(TransactionRequest request, Long userId) {
         // Load user từ DB theo userId
@@ -50,14 +49,15 @@ public class TransactionService {
         }
 
 
-
         // Tạo Transaction
         Transaction transaction = Transaction.builder()
                 .amount(request.getAmount())
                 .note(request.getNote())
                 .category(category)
                 .user(user)
-                .type(CategoryType.valueOf(category.getType().name()))
+
+                .type(category.getCategoryIcon().getType())
+
                 .date(parsedDate)
                 .build();
 

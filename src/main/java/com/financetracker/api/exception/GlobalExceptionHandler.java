@@ -1,11 +1,13 @@
 package com.financetracker.api.exception;
 
 import com.financetracker.api.dto.FieldErrorDTO;
+import com.financetracker.api.response.ApiResponse;
 import com.financetracker.api.response.ErrorResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -94,12 +96,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 //        body.put("message", "Internal Server Error");
 //        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
 //    }
+    //phần này của Transactionservice
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<?> handleNotFound(ResourceNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                 Map.of("success", false, "message", ex.getMessage())
         );
     }
-
+    //phần xử lý này của budgetservice
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<?> handleAccessDenied(AccessDeniedException ex) {
+        return ResponseEntity.status(403).body(
+                ApiResponse.error("Access denied: " + ex.getMessage())
+        );
+    }
 
 }
