@@ -74,7 +74,8 @@ public class SecurityConfig {
                                 "/api/auth/login",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
-                                "/api/user/token-expiration"
+                                "/api/user/token-expiration",
+                                "/reports/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

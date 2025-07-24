@@ -69,7 +69,7 @@ public class User {
 
 
     @Column(name = "failed_attempts")
-    private int failedAttempts = 0;
+    private Integer failedAttempts = 0;
 
     @Column(name = "account_locked_until")
     private LocalDateTime accountLockedUntil;

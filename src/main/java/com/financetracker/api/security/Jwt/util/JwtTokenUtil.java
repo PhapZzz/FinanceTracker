@@ -2,10 +2,13 @@ package com.financetracker.api.security.Jwt.util;
 
 import com.financetracker.api.entity.User;
 import com.financetracker.api.exception.JwtAuthenticationException;
+import com.financetracker.api.security.CustomUserDetails;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -87,5 +90,16 @@ public class JwtTokenUtil {
     // lấy time hết hạn của token
     public Instant getExpirationFromToken(String token) {
         return parseClaims(token).getExpiration().toInstant();
+    }
+
+
+    // lấy userID
+    public static Long getCurrentUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            return userDetails.getUser().getId();
+        }
+        return null;
     }
 }

@@ -2,6 +2,8 @@ package com.financetracker.api.service.serviceImpl;
 
 import com.financetracker.api.dto.*;
 import com.financetracker.api.repository.SummaryRepository;
+import com.financetracker.api.security.Jwt.JwtService;
+import com.financetracker.api.security.Jwt.util.JwtTokenUtil;
 import com.financetracker.api.service.ReportService;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
@@ -48,7 +50,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     public static long getUserID(){
-        return 1;
+        return JwtTokenUtil.getCurrentUserId();
     }
 
     public static String formatMonth(int monthNumber) {
@@ -85,9 +87,10 @@ public class ReportServiceImpl implements ReportService {
         ChartItemDTO chartItemDTO = chartItems.stream()
                 .filter(item -> item.getMonth().equals(getMonthName(monthtxt)))
                 .findFirst()
-                .orElse(null);
+                .orElse(new ChartItemDTO(getMonthYearName(monthtxt, year), 0.0, 0.0)); // fallback nếu không có dữ liệu
 
-        // set định dạng
+
+
         chartItemDTO.setMonth(getMonthYearName(monthtxt,year));
 
         return new MonthlyReportDTO(chartItems,chartItemDTO);
@@ -122,7 +125,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public String exportPDF(ReportExportRequest request){
-        Long userid = getUserID();
+        long userid = getUserID();
         switch (request.getReportType()){
             case SUMMARY ->
             {
