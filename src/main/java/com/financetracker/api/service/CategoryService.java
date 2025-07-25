@@ -8,6 +8,7 @@ import java.util.Map;
 
 public interface CategoryService {
     CategoryDTO add(CategoryDTO categoryDTO);
+
     List<CategoryDTO> getCategoriesByType(CategoryType type);
     Map<CategoryType, List<CategoryDTO>> getAllCategoriesGroupedByType();
 }

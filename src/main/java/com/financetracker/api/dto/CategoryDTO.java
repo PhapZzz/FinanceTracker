@@ -17,14 +17,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class CategoryDTO {
+    private Long id;
+
     @NotBlank(message = "Category name is required")
     private String name;
-
-    @Enumerated(EnumType.STRING)
-    @NotNull(message = "Category type must be INCOME or EXPENSE")
-    @Pattern(regexp = "INCOME|EXPENSE", message = "Category type must be INCOME or EXPENSE")
     private CategoryType type;
-    private String iconUrl;
     private String emoji;
+    private String iconUrl;
     private Long userId;
 }

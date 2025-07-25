@@ -2,8 +2,12 @@ package com.financetracker.api.service.serviceImpl;
 
 import com.financetracker.api.dto.CategoryDTO;
 import com.financetracker.api.entity.Category;
+import com.financetracker.api.entity.CategoryIcon;
+import com.financetracker.api.entity.User;
 import com.financetracker.api.enums.CategoryType;
+import com.financetracker.api.exception.CategoryAlreadyExistsException;
 import com.financetracker.api.mapper.CategoryMapper;
+import com.financetracker.api.repository.CategoryIconRepository;
 import com.financetracker.api.repository.CategoryRepository;
 import com.financetracker.api.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +19,16 @@ import java.util.stream.Collectors;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
-
+    // <- Dòng này
     private final CategoryRepository categoryRepository;
+    private final CategoryIconRepository categoryIconRepository;
     private final CategoryMapper categoryMapper;
 
     @Autowired
-    public CategoryServiceImpl(CategoryRepository categoryRepository,CategoryMapper categoryMapper){
+    public CategoryServiceImpl(CategoryRepository categoryRepository,CategoryIconRepository categoryIconRepository,CategoryMapper categoryMapper){
         this.categoryRepository = categoryRepository;
-        this.categoryMapper =categoryMapper;
+        this.categoryIconRepository = categoryIconRepository;
+        this.categoryMapper = categoryMapper;
     }
     public static long getUserID(){
 
@@ -31,11 +37,37 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDTO add(CategoryDTO categoryDTO){
+    public CategoryDTO add(CategoryDTO dto){
         Long userid = getUserID();
-        categoryDTO.setUserId(userid);
-        Category category = categoryRepository.save(categoryMapper.toEntity(categoryDTO));
-        return categoryMapper.toDTO(category);
+        dto.setUserId(userid);
+
+
+
+        // 1. Luôn dùng name để tìm CategoryIcon (emoji không cần thiết)
+        CategoryIcon icon = CategoryIconRepository.findByCategoryName(dto.getName());
+
+        // 2. Kiểm tra category trùng (theo iconId + userId)
+        boolean exists = categoryRepository.existsByCategoryIconIdAndUserId(icon.getId(), userId);
+        if (exists) {
+            throw new CategoryAlreadyExistsException("Category name already exists");
+        }
+
+        // 3. Tạo Category entity
+        Category category = Category.builder()
+                .categoryIcon(icon)
+                .user(User.builder().id(userId).build())
+                .type(dto.getType())
+                .build();
+
+        Category saved = categoryRepository.save(category);
+
+        // 4. Trả về DTO với emoji + iconUrl lấy từ CategoryIcon
+        CategoryDTO result = categoryMapper.toDTO(saved);
+        result.setName(icon.getCategoryName());
+        result.setEmoji(icon.getEmoji());
+        result.setIconUrl(icon.getIconUrl());
+
+        return result;
 
     }
 

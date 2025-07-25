@@ -6,6 +6,7 @@ import com.financetracker.api.response.FieldErrorDTO;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.data.repository.config.RepositoryNameSpaceHandler;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -39,7 +40,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         ErrorResponse response = ErrorResponse.of("Validation failed", errorList);
 
-        return new ResponseEntity<>(response, status);
+        return new ResponseEntity<>(response, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
 
