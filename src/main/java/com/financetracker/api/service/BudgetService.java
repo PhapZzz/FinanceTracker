@@ -47,7 +47,7 @@ public class BudgetService {
             throw new AccessDeniedException("Category does not belong to the current user");
         }
         //coi category và icon dính nhau
-        if (category.getCategoryIcon().getType() != CategoryType.EXPENSE) {
+        if (category.getType() != CategoryType.EXPENSE) {
             throw new IllegalArgumentException("Only EXPENSE categories can have budgets");
         }
 

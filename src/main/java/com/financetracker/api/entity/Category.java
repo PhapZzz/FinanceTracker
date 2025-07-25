@@ -1,15 +1,16 @@
 package com.financetracker.api.entity;
 
+import com.financetracker.api.enums.CategoryType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+
 @Entity
 @Table(name = "categories")
 @Data
@@ -26,12 +27,17 @@ public class Category {
     @JoinColumn(name = "category_icon_id", nullable = false)
     private CategoryIcon categoryIcon; // ✅ Thay thế name, emoji, type, iconUrl
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CategoryType type;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "user_id")
     private User user;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
+
 
     @PrePersist
     protected void onCreate() {

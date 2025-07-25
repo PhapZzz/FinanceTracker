@@ -111,4 +111,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         );
     }
 
+    // ✅ Dành cho lỗi 409 Conflict (trùng tên danh mục)
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<?> handleConflict(IllegalStateException ex) {
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                Map.of(
+                        "success", false,
+                        "message", ex.getMessage()
+                )
+        );
+    }
+
+
 }

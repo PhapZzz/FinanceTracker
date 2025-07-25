@@ -25,7 +25,7 @@ public class TransactionMapper {
 
                         .id(category.getId())
                         .name(icon.getName())
-                        .type(icon.getType().name())
+                        .type(category.getType().name())
                         .emoji(icon.getEmoji())
                         .iconUrl(icon.getIconUrl())
 
@@ -46,7 +46,7 @@ public class TransactionMapper {
                         .name(transaction.getCategory().getCategoryIcon().getName())
                         .emoji(transaction.getCategory().getCategoryIcon().getEmoji())
                         .iconUrl(transaction.getCategory().getCategoryIcon().getIconUrl())
-                        .type(transaction.getCategory().getCategoryIcon().getType().name())
+                        .type(transaction.getCategory().getType().name())
 
                         .build())
                 .build();

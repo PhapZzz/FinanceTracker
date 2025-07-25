@@ -1,6 +1,7 @@
 package com.financetracker.api.mapper;
 
 import com.financetracker.api.entity.Budget;
+import com.financetracker.api.entity.Category;
 import com.financetracker.api.entity.CategoryIcon;
 import com.financetracker.api.response.BudgetResponse;
 import org.springframework.stereotype.Component;
@@ -11,7 +12,7 @@ public class BudgetMapper {
     public BudgetResponse toResponse(Budget budget) {
 
         CategoryIcon icon = budget.getCategory().getCategoryIcon();
-
+        Category category = budget.getCategory();
         return BudgetResponse
                 .builder()
 
@@ -27,7 +28,7 @@ public class BudgetMapper {
                         .name(icon.getName())
                         .emoji(icon.getEmoji())
                         .iconUrl(icon.getIconUrl())
-                        .type(icon.getType().name())
+                        .type(category.getType().name())
 
                         .build())
                 .build();
