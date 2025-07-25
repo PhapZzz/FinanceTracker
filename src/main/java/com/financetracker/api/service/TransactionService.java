@@ -59,9 +59,6 @@ public class TransactionService {
                 .note(request.getNote())
                 .category(category)
                 .user(user)
-
-                .type(category.getCategoryIcon().getType())
-
                 .date(parsedDate)
                 .build();
 
