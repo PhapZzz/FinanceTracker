@@ -28,6 +28,7 @@ public class NotificationSettingService {
 
     @Transactional
     public NotificationSettingResponse updateSettings(NotificationSettingRequest request, Long userId) {
+
         NotificationSetting setting = notificationSettingRepository
                 .findByUserId(userId)
                 .orElseGet(() -> createDefaultSettings(userId));
