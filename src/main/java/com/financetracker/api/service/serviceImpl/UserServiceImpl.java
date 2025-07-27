@@ -4,15 +4,18 @@ import com.financetracker.api.entity.Role;
 import com.financetracker.api.entity.User;
 import com.financetracker.api.enums.RoleName;
 import com.financetracker.api.exception.AppException;
+import com.financetracker.api.exception.ResourceNotFoundException;
 import com.financetracker.api.mapper.UserMapper;
 import com.financetracker.api.repository.RoleRepository;
 import com.financetracker.api.repository.UserRepository;
 import com.financetracker.api.request.LoginRequest;
+import com.financetracker.api.request.ProfileRequest;
 import com.financetracker.api.request.RegisterRequest;
 import com.financetracker.api.response.LoginResponse;
 import com.financetracker.api.response.UserResponse;
 import com.financetracker.api.security.Jwt.util.JwtTokenUtil;
 import com.financetracker.api.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -159,6 +162,24 @@ public class UserServiceImpl implements UserService {
         return LoginResponse.builder()
                 .accessToken(token)
                 .expire(expiresToken)
+                .build();
+    }
+
+    @Transactional
+    public UserResponse updateProfile(Long userId, ProfileRequest request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        user.setFullName(request.getFullName());
+        user.setAvatar(request.getAvatar());
+
+        userRepository.save(user);
+
+        return UserResponse.builder()
+                .userId(user.getId())
+                .fullName(user.getFullName())
+                .email(user.getEmail())
+                .avatar(user.getAvatar())
                 .build();
     }
 }

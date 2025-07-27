@@ -1,9 +1,11 @@
 package com.financetracker.api.service;
 
 import com.financetracker.api.request.LoginRequest;
+import com.financetracker.api.request.ProfileRequest;
 import com.financetracker.api.request.RegisterRequest;
 import com.financetracker.api.response.LoginResponse;
 import com.financetracker.api.response.UserResponse;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -75,4 +77,7 @@ public interface UserService {
     }*/
 
     public LoginResponse loginUser(LoginRequest request) ;
+
+    UserResponse updateProfile(Long userId, @Valid ProfileRequest request);
+
 }
