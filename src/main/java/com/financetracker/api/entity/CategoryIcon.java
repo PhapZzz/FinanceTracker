@@ -24,10 +24,6 @@ public class CategoryIcon {
     @Column(name = "category_name", nullable = false, unique = true)
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private CategoryType type;
-
     @Column(nullable = false, length = 10)
     private String emoji;
 

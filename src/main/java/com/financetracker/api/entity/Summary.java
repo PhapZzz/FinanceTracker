@@ -4,6 +4,7 @@ package com.financetracker.api.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Immutable;
+import org.hibernate.annotations.Subselect;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,6 +16,8 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
+@Subselect("SELECT * FROM your_view_name")
 public class Summary {
 
     @Id

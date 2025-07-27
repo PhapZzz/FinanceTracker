@@ -46,9 +46,6 @@ public class Transaction {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private CategoryType type;
 
     @PrePersist
     protected void onCreate() {

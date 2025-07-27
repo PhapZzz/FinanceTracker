@@ -1,17 +1,22 @@
 package com.financetracker.api.exception;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.financetracker.api.dto.FieldErrorDTO;
+import com.financetracker.api.enums.CategoryType;
 import com.financetracker.api.response.ErrorResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -101,5 +106,38 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         );
     }
 
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(
+            HttpMessageNotReadableException ex,
+            HttpHeaders headers,
+            HttpStatusCode status,
+            WebRequest request) {
+
+        Throwable cause = ex.getCause();
+        if (cause instanceof InvalidFormatException formatException) {
+            Class<?> targetType = formatException.getTargetType();
+            if (targetType.isEnum()) {
+                Object[] constants = targetType.getEnumConstants();
+                String allowedValues = Arrays.stream(constants)
+                        .map(Object::toString)
+                        .collect(Collectors.joining(", "));
+
+                String fieldName = formatException.getPath().stream()
+                        .map(JsonMappingException.Reference::getFieldName)
+                        .collect(Collectors.joining("."));
+
+                Map<String, String> body = Map.of(
+                        "error", "Invalid value for enum field: " + fieldName,
+                        "allowed", allowedValues
+                );
+
+                return new ResponseEntity<>(body, HttpStatus.UNPROCESSABLE_ENTITY);
+            }
+
+        }
+
+        // fallback xử lý mặc định
+        return super.handleHttpMessageNotReadable(ex, headers, status, request);
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.financetracker.api.repository;
 
+import com.financetracker.api.dto.PieChart;
 import com.financetracker.api.dto.TopCategoryExpenses;
 import com.financetracker.api.dto.TopCategoryIncome;
 import com.financetracker.api.entity.Summary;
@@ -50,6 +51,24 @@ public interface SummaryRepository extends JpaRepository<Summary,Long> {
                    ORDER BY amount DESC
             """,nativeQuery = true)
     List<TopCategoryIncome> getTopCategoryImcome(@Param("userId") Long userId, @Param("month") int month, @Param("year") int year);
+
+    @Query(value = """
+            SELECT
+                        sum(s.amount) as amount,
+                        s.category_id,
+            			s.category_name as category,
+                        s.type as type,
+                         STR_TO_DATE(CONCAT(year, '-', LPAD(month, 2, '0'), '-', LPAD(day, 2, '0')), '%Y-%m-%d') AS date,
+                        s.emoji
+                    FROM financetracker.summary s
+                    WHERE s.user_id = :userId AND s.year = :year AND s.month = :month
+                    GROUP BY s.category_id, s.category_name, s.type, s.emoji, s.year, s.month, s.day
+            
+                   ORDER BY date DESC
+                   limit 3
+            """,nativeQuery = true)
+    List<Object[]> getCategory(@Param("userId") Long userId, @Param("month") int month, @Param("year") int year);
+
 
 }
 

@@ -1,5 +1,6 @@
 package com.financetracker.api.entity;
 
+import com.financetracker.api.enums.CategoryType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,6 +33,10 @@ public class Category {
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CategoryType type;
 
     @PrePersist
     protected void onCreate() {

@@ -1,6 +1,7 @@
 package com.financetracker.api.response;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
 @JsonPropertyOrder({ "success","message", "data" }) // Ép thứ tự các trường
@@ -9,16 +10,16 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SuccessResponse<T> {
 
-    private final String success = "true";
+    private String success = "true";
     private T data;
     private String message;
 
     public static <T> SuccessResponse<T> of(final T data, String message) {
         return SuccessResponse.<T>builder()
-
+                .success("true")
                 .data(data)
                 .message(message)
 
