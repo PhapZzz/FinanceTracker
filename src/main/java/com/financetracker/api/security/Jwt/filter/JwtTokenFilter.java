@@ -1,8 +1,8 @@
 package com.financetracker.api.security.Jwt.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.financetracker.api.security.Jwt.util.JwtTokenUtil;
 import com.financetracker.api.security.CustomUserDetailsService;
+import com.financetracker.api.security.Jwt.util.JwtTokenUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Component
@@ -68,8 +69,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private void handleError(HttpServletResponse response, String message, HttpStatus status) throws IOException {
         response.setStatus(status.value());
         response.setContentType("application/json");
-        response.getWriter().write(new ObjectMapper().writeValueAsString(
-                Map.of("success", false, "message", message)
-        ));
+        // Sử dụng LinkedHashMap để giữ thứ tự key
+        Map<String, Object> errorBody = new LinkedHashMap<>();
+        errorBody.put("success", false);
+        errorBody.put("message", message);
+
+        response.getWriter().write(new ObjectMapper().writeValueAsString(errorBody));
     }
 }

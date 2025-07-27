@@ -3,13 +3,14 @@ package com.financetracker.api.exception;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.financetracker.api.dto.FieldErrorDTO;
-import com.financetracker.api.enums.CategoryType;
+import com.financetracker.api.response.ApiResponse;
 import com.financetracker.api.response.ErrorResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -139,5 +140,27 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         // fallback xử lý mặc định
         return super.handleHttpMessageNotReadable(ex, headers, status, request);
     }
+
+    //phần xử lý này của budgetservice
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<?> handleAccessDenied(AccessDeniedException ex) {
+        return ResponseEntity.status(403).body(
+                ApiResponse.error("Access denied: " + ex.getMessage())
+        );
+    }
+
+    // ✅ Dành cho lỗi 409 Conflict (trùng tên danh mục)
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<?> handleConflict(IllegalStateException ex) {
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                Map.of(
+                        "success", false,
+                        "message", ex.getMessage()
+                )
+        );
+    }
+
+
 
 }

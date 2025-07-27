@@ -7,14 +7,15 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "users", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email")
-})
+
 @Data
 @NoArgsConstructor // contrustor không tham số
 @AllArgsConstructor // contrustor cótham số
 @Builder
+@Entity
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "email")
+})
 public class User {
     //note
     //orphanRemoval = true giúp xóa tự động các con khi xóa cha (ví dụ xóa category thì xóa hết budget liên quan).
@@ -55,7 +56,7 @@ public class User {
     private Set<Budget> budgets = new HashSet<>();
 
     @OneToOne(mappedBy = "user")
-    private NotificationSettings notificationSettings;
+    private NotificationSetting notificationSettings;
 
     @Column(name = "is_verified", nullable = false)
     private boolean isVerified = false;

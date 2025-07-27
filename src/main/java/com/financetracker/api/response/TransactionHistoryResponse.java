@@ -1,30 +1,25 @@
 package com.financetracker.api.response;
 
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Getter
-@Setter
+@Data
 @Builder
-public class TransactionResponse {
+public class TransactionHistoryResponse {
     private Long id;
     private BigDecimal amount;
-    private String note;
     private LocalDate date;
     private CategoryDTO category;
 
-    @Getter
-    @Setter
+    @Data
     @Builder
     public static class CategoryDTO {
-        private Long id;
         private String name;
-        private String type;
         private String emoji;
         private String iconUrl;
+        private String type;
     }
 }
