@@ -76,7 +76,7 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/api/user/token-expiration",
 
-                                "/api/reports/**"
+                                "/api/reports/download/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

@@ -1,5 +1,7 @@
 package com.financetracker.api.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.financetracker.api.dto.DashboardResponse;
 import com.financetracker.api.response.SuccessResponse;
 import com.financetracker.api.service.DashboardService;
@@ -22,11 +24,16 @@ public class DashboardController {
 
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SuccessResponse<DashboardResponse>> add(@RequestParam Integer month , @RequestParam Integer year){
+    public ResponseEntity<?> getDashboardData(@RequestParam Integer month , @RequestParam Integer year){
         DashboardResponse result = dashboardService.getDashboard(month, year);
         System.out.println(">>> Dashboard data: " + result);
-        return ResponseEntity.status(HttpStatus.OK).body(SuccessResponse.of(result,"ok"));
+        SuccessResponse<DashboardResponse> response = SuccessResponse.of(result, "ok");
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
+    @GetMapping("/test")
+    public ResponseEntity<?> testJson() {
+        return ResponseEntity.ok(SuccessResponse.of("test-data", "ok"));
     }
 
 }

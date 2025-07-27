@@ -34,7 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String path = request.getServletPath();
 
         // Bỏ qua xác thực token cho các endpoint công khai
-        if (path.equals("/api/auth/register") || path.equals("/api/auth/login") || path.startsWith("/api/reports")) {
+        if (path.equals("/api/auth/register") || path.equals("/api/auth/login") || path.startsWith("/api/reports/download")) {
             filterChain.doFilter(request, response);
             return;
         }
