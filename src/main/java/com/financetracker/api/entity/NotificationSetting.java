@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 // cài đặt thông báo
-public class NotificationSettings {
+public class NotificationSetting {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name = "notification_id")

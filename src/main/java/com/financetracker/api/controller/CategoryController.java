@@ -88,7 +88,4 @@ public class CategoryController {
             return ResponseEntity.ok(ApiResponse.success("No categories found for the given type", List.of()));
         }
     }
-
-
-
 }

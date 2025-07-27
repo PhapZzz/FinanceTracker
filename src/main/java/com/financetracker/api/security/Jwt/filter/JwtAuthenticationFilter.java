@@ -40,16 +40,33 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         String authHeader = request.getHeader("Authorization");
+//        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+//            handleError(response, "Missing access token", HttpStatus.UNAUTHORIZED);
+//            return;
+//        }
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            handleError(response, "Missing access token", HttpStatus.UNAUTHORIZED);
+            String message = path.startsWith("/api/notifications/settings")
+                    ? "Unauthorized – Please login to access notification settings"
+                    : "Missing access token";
+
+            handleError(response, message, HttpStatus.UNAUTHORIZED);
             return;
         }
 
         String token = authHeader.substring(7);
+//        if (!jwtTokenUtil.validateTokenOrThrow(token)) {
+//            handleError(response, "Invalid or expired token", HttpStatus.UNAUTHORIZED);
+//            return;
+//        }
         if (!jwtTokenUtil.validateTokenOrThrow(token)) {
-            handleError(response, "Invalid or expired token", HttpStatus.UNAUTHORIZED);
+            String message = path.startsWith("/api/notifications/settings")
+                    ? "Unauthorized – Invalid or expired token"
+                    : "Invalid or expired token";
+
+            handleError(response, message, HttpStatus.UNAUTHORIZED);
             return;
         }
+
 
         String email = jwtTokenUtil.getEmailFromToken(token);
         UserDetails userDetails = userDetailsService.loadUserByUsername(email);

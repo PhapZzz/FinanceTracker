@@ -60,7 +60,7 @@ public class CategoryService {
         Category category = Category.builder()
                 .user(user)
                 .categoryIcon(icon)
-                .type(request.getType()) // ✅ type từ request lưu vào Category
+                .type(request.getType()) //  type từ request lưu vào Category
                 .build();
 
         categoryRepository.save(category);

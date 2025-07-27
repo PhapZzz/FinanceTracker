@@ -125,12 +125,7 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<!--để dùng simple-->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.18.30</version> <!-- hoặc version bạn đang dùng -->
-			<scope>provided</scope>
-		</dependency>
+		
 
 
 	</dependencies>

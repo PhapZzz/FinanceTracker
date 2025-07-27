@@ -56,7 +56,7 @@ public class User {
     private Set<Budget> budgets = new HashSet<>();
 
     @OneToOne(mappedBy = "user")
-    private NotificationSettings notificationSettings;
+    private NotificationSetting notificationSettings;
 
     @Column(name = "is_verified", nullable = false)
     private boolean isVerified = false;

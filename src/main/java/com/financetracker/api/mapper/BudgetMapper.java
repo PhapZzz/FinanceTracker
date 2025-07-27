@@ -7,6 +7,7 @@ import com.financetracker.api.response.BudgetResponse;
 import org.springframework.stereotype.Component;
 
 @Component
+
 public class BudgetMapper {
 
     public BudgetResponse toResponse(Budget budget) {
