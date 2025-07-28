@@ -60,7 +60,7 @@ public interface SummaryRepository extends JpaRepository<Summary,Long> {
                         s.type as type,
                          STR_TO_DATE(CONCAT(year, '-', LPAD(month, 2, '0'), '-', LPAD(day, 2, '0')), '%Y-%m-%d') AS date,
                         s.emoji
-                    FROM financetracker.summary s
+                    FROM summary s
                     WHERE s.user_id = :userId AND s.year = :year AND s.month = :month
                     GROUP BY s.category_id, s.category_name, s.type, s.emoji, s.year, s.month, s.day
             
