@@ -145,13 +145,13 @@ public class TransactionControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.message").value("Transaction history fetched successfully"))
-                .andExpect(jsonPath("$.data.data[0].id").value(1))
-                .andExpect(jsonPath("$.data.data[0].amount").value("50000"))
-                .andExpect(jsonPath("$.data.data[0].date[0]").value(2025))    // trong response không @JsonFormat(pattern = "yyyy-MM-dd")
-                .andExpect(jsonPath("$.data.data[0].date[1]").value(7))       // nên khi localDate chuyển sang JSON sẽ thành mảng
-                .andExpect(jsonPath("$.data.data[0].date[2]").value(27))
-                .andExpect(jsonPath("$.data.pagination.currentPage").value(1))
-                .andExpect(jsonPath("$.data.pagination.totalItems").value(1));
+                .andExpect(jsonPath("$.data[0].id").value(1))
+                .andExpect(jsonPath("$.data[0].amount").value("50000"))
+                .andExpect(jsonPath("$.data[0].date[0]").value(2025))    // trong response không @JsonFormat(pattern = "yyyy-MM-dd")
+                .andExpect(jsonPath("$.data[0].date[1]").value(7))       // nên khi localDate chuyển sang JSON sẽ thành mảng
+                .andExpect(jsonPath("$.data[0].date[2]").value(27))
+                .andExpect(jsonPath("$.pagination.currentPage").value(1))
+                .andExpect(jsonPath("$.pagination.totalItems").value(1));
     }
 
 

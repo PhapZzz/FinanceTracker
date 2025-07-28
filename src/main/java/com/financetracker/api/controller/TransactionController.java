@@ -4,7 +4,6 @@ import com.financetracker.api.AuthUtil;
 import com.financetracker.api.enums.CategoryType;
 import com.financetracker.api.request.TransactionRequest;
 import com.financetracker.api.response.ApiResponse;
-import com.financetracker.api.response.PaginatedResponse;
 import com.financetracker.api.response.TransactionHistoryResponse;
 import com.financetracker.api.response.TransactionResponse;
 import com.financetracker.api.security.CustomUserDetails;
@@ -32,7 +31,7 @@ public class TransactionController {
     public ResponseEntity<?> addTransaction(@Valid @RequestBody TransactionRequest request,
                                             @AuthenticationPrincipal CustomUserDetails userDetails) {
         TransactionResponse response = transactionService
-                                        .addTransaction(request, userDetails.getUser().getId());
+                .addTransaction(request, userDetails.getUser().getId());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 ApiResponse.success("Transaction added successfully", response)
@@ -49,8 +48,7 @@ public class TransactionController {
             @RequestParam(required = false) Long categoryId,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size
-    )
-    {
+    ) {
         Long userId = AuthUtil.getCurrentUserId();
 
         // Convert ngày nếu có
@@ -67,8 +65,15 @@ public class TransactionController {
                 size
         );
 
-        return ApiResponse.success("Transaction history fetched successfully",
-                new PaginatedResponse<>(result));
+        return ApiResponse.success(
+                "Transaction history fetched successfully",
+                result.getContent(),
+                new ApiResponse.Pagination(
+                        result.getNumber() + 1,
+                        result.getTotalPages(),
+                        result.getTotalElements()
+                )
+        );
     }
 }
 /*return ApiResponse.success(
