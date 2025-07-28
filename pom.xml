@@ -125,30 +125,25 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<!--để dùng simple-->
-		<!-- JUnit 5 -->
 		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter</artifactId>
-			<version>5.9.3</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<!-- Mockito (for mocking dependencies like Repository) -->
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>5.2.0</version>
-			<scope>test</scope>
+			<version>5.12.0</version>
 		</dependency>
-
-		<!-- Mockito JUnit integration -->
 		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-junit-jupiter</artifactId>
-			<version>5.2.0</version>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 
 
 	</dependencies>

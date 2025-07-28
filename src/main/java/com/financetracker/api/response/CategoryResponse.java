@@ -1,13 +1,12 @@
 package com.financetracker.api.response;
 
 import com.financetracker.api.enums.CategoryType;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CategoryResponse {
     private Long id;
     private String name;
@@ -18,6 +17,8 @@ public class CategoryResponse {
     @Getter
     @Setter
     @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Simple {
         private Long id;
         private String name;
