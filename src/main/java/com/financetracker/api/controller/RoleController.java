@@ -1,28 +1,23 @@
 package com.financetracker.api.controller;
 
 import com.financetracker.api.dto.RoleDTO;
-import com.financetracker.api.response.SuccessResponse;
+import com.financetracker.api.dto.response.SuccessResponse;
 import com.financetracker.api.service.RoleService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/role")
+@RequiredArgsConstructor
 public class RoleController {
 
     private final RoleService roleService;
 
-    @Autowired
-    public RoleController(RoleService roleService){
-        this.roleService = roleService;
-    }
 
     @GetMapping
     public ResponseEntity<SuccessResponse<List<RoleDTO>>> getall(){

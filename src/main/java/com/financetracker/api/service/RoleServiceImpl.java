@@ -1,10 +1,8 @@
-package com.financetracker.api.service.serviceImpl;
+package com.financetracker.api.service;
 
 import com.financetracker.api.dto.RoleDTO;
-import com.financetracker.api.entity.Role;
 import com.financetracker.api.mapper.RoleMapper;
 import com.financetracker.api.repository.RoleRepository;
-import com.financetracker.api.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

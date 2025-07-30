@@ -1,7 +1,7 @@
 package com.financetracker.api.security.Jwt.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.financetracker.api.security.CustomUserDetailsService;
+import com.financetracker.api.service.CustomUserDetailsService;
 import com.financetracker.api.security.Jwt.util.JwtTokenUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

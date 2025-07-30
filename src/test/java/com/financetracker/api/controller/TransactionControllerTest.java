@@ -4,11 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.financetracker.api.entity.Role;
 import com.financetracker.api.entity.User;
 import com.financetracker.api.enums.RoleName;
-import com.financetracker.api.request.TransactionRequest;
-import com.financetracker.api.response.TransactionHistoryResponse;
-import com.financetracker.api.response.TransactionResponse;
-import com.financetracker.api.response.TransactionResponse.CategoryDTO;
-import com.financetracker.api.security.CustomUserDetails;
+import com.financetracker.api.dto.request.TransactionRequest;
+import com.financetracker.api.dto.response.TransactionHistoryResponse;
+import com.financetracker.api.dto.response.TransactionResponse;
+import com.financetracker.api.dto.response.TransactionResponse.CategoryDTO;
+import com.financetracker.api.service.CustomUserDetails;
+import com.financetracker.api.service.CustomUserDetailsService;
 import com.financetracker.api.service.TransactionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -46,7 +47,7 @@ public class TransactionControllerTest {
     @MockBean private com.financetracker.api.security.Jwt.filter.JwtAuthenticationFilter jwtAuthenticationFilter;
     @MockBean private com.financetracker.api.security.Jwt.handler.JwtAccessDeniedHandler jwtAccessDeniedHandler;
     @MockBean private com.financetracker.api.security.Jwt.handler.JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    @MockBean private com.financetracker.api.security.CustomUserDetailsService customUserDetailsService;
+    @MockBean private CustomUserDetailsService customUserDetailsService;
 
     private CustomUserDetails mockUserDetails;
 

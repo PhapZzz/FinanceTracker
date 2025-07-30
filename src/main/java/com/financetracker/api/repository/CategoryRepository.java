@@ -35,4 +35,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
         WHERE c.user.id = :userId
     """)
     List<Category> findByUserId(Long userId);
+
+//    List<Category> findByUserId(Long userId)
 }

@@ -1,4 +1,4 @@
-package com.financetracker.api.request;
+package com.financetracker.api.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

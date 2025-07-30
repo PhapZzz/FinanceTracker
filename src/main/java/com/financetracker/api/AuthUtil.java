@@ -1,6 +1,6 @@
 package com.financetracker.api;
 
-import com.financetracker.api.security.CustomUserDetails;
+import com.financetracker.api.service.CustomUserDetails;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public class AuthUtil {

@@ -1,8 +1,8 @@
 package com.financetracker.api.mapper;
 
-import com.financetracker.api.request.RegisterRequest;
+import com.financetracker.api.dto.request.RegisterRequest;
 import com.financetracker.api.entity.User;
-import com.financetracker.api.response.UserResponse;
+import com.financetracker.api.dto.response.UserResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

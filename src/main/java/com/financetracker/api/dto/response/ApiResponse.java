@@ -1,4 +1,4 @@
-package com.financetracker.api.response;
+package com.financetracker.api.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,39 +7,36 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Getter
-@AllArgsConstructor(staticName = "of") // Optional factory method
+@AllArgsConstructor(staticName = "of")
 @NoArgsConstructor
 public class ApiResponse<T> {
     private boolean success;
     private String message;
     private T data;
+    private Pagination pagination; //
 
+    // Cho response có phân trang
+    public static <T> ApiResponse<T> success(String message, T data, Pagination pagination) {
+        return new ApiResponse<>(true, message, data, pagination);
+    }
 
-    //tách tránh lồng data
-//    private PaginatedResponse paginatedResponse;
-
-
-    // Thành công có dữ liệu
+    //  Response không phân trang (giữ nguyên)
     public static <T> ApiResponse<T> success(String message, T data) {
-        return new ApiResponse<>(true, message, data);
+        return new ApiResponse<>(true, message, data, null);
     }
 
-    // Thành công không có dữ liệu (ví dụ: danh sách trống)
     public static ApiResponse<Object> success(String message) {
-        return new ApiResponse<>(true, message, null);
+        return new ApiResponse<>(true, message, null, null);
     }
 
-    // Lỗi chung (dạng chuỗi)
     public static ApiResponse<Object> error(String message) {
-        return new ApiResponse<>(false, message, null);
+        return new ApiResponse<>(false, message, null, null);
     }
 
-    // Lỗi validation (dạng danh sách field/message)
     public static ApiResponse<List<ValidationError>> validationFailed(List<ValidationError> errors) {
-        return new ApiResponse<>(false, "Validation failed", errors);
+        return new ApiResponse<>(false, "Validation failed", errors, null);
     }
 
-    //  Inner class cho lỗi validation
     @Getter
     @AllArgsConstructor
     public static class ValidationError {
@@ -47,7 +44,15 @@ public class ApiResponse<T> {
         private String message;
     }
 
+    @Getter
+    @AllArgsConstructor
+    public static class Pagination {
+        private int currentPage;
+        private int totalPages;
+        private long totalItems;
+    }
 }
+
 /*
 * @Getter
 @AllArgsConstructor

@@ -1,4 +1,4 @@
-package com.financetracker.api.security;
+package com.financetracker.api.service;
 
 import com.financetracker.api.entity.User;
 import lombok.*;

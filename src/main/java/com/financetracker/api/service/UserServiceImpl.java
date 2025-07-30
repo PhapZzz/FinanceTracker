@@ -1,4 +1,4 @@
-package com.financetracker.api.service.serviceImpl;
+package com.financetracker.api.service;
 
 import com.financetracker.api.entity.Role;
 import com.financetracker.api.entity.User;
@@ -8,13 +8,12 @@ import com.financetracker.api.exception.ResourceNotFoundException;
 import com.financetracker.api.mapper.UserMapper;
 import com.financetracker.api.repository.RoleRepository;
 import com.financetracker.api.repository.UserRepository;
-import com.financetracker.api.request.LoginRequest;
-import com.financetracker.api.request.ProfileRequest;
-import com.financetracker.api.request.RegisterRequest;
-import com.financetracker.api.response.LoginResponse;
-import com.financetracker.api.response.UserResponse;
+import com.financetracker.api.dto.request.LoginRequest;
+import com.financetracker.api.dto.request.ProfileRequest;
+import com.financetracker.api.dto.request.RegisterRequest;
+import com.financetracker.api.dto.response.LoginResponse;
+import com.financetracker.api.dto.response.UserResponse;
 import com.financetracker.api.security.Jwt.util.JwtTokenUtil;
-import com.financetracker.api.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
