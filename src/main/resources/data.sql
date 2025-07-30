@@ -1,0 +1,13 @@
+--INSERT INTO category_icons (category_name, emoji, icon_url) VALUES
+--('Housing', '🏠 ', 'https://cdn.example.com/icons/housing.png'),
+--('Food', '🍽 ', 'https://cdn.example.com/icons/food.png'),
+--('Shopping', '🛍 ', 'https://cdn.example.com/icons/shopping.png'),
+--('Salary', '💵 ', 'https://cdn.example.com/icons/salary.png'),
+--('Freelance', '💼 ', 'https://cdn.example.com/icons/freelance.png'),
+--('Investments', '📈 ', 'https://cdn.example.com/icons/investments.png'),
+--('Other', '👤 ', 'https://cdn.example.com/icons/other.png'),
+--('Transportation', '🚗 ', 'https://cdn.example.com/icons/transportation.png'),
+--('Entertainment', '🎮 ', 'https://cdn.example.com/icons/entertainment.png'),
+--('Health', '🏥 ', 'https://cdn.example.com/icons/health.png'),
+--('Education', '🎓 ', 'https://cdn.example.com/icons/education.png'),
+--('Gifts', '🎁 ', 'https://cdn.example.com/icons/gifts.png');
