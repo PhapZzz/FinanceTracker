@@ -40,4 +40,12 @@ public class CategoryIcon {
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
+
+    public CategoryIcon(Long id, String name, String emoji, String iconUrl) {
+        this.id = id;
+        this.name = name;
+        this.emoji = emoji;
+        this.iconUrl = iconUrl;
+    }
+
 }

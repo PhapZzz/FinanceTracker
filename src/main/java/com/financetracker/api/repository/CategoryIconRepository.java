@@ -22,5 +22,7 @@ public interface CategoryIconRepository extends JpaRepository<CategoryIcon, Long
 
     boolean existsByNameIgnoreCase(String name);
 
+    Optional<CategoryIcon> findByName(String name);
+
 }
 
