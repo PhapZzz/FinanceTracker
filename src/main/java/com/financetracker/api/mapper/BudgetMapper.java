@@ -3,7 +3,7 @@ package com.financetracker.api.mapper;
 import com.financetracker.api.entity.Budget;
 import com.financetracker.api.entity.Category;
 import com.financetracker.api.entity.CategoryIcon;
-import com.financetracker.api.response.BudgetResponse;
+import com.financetracker.api.dto.response.BudgetResponse;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -3,7 +3,7 @@ package com.financetracker.api.controller;
 import com.financetracker.api.dto.MonthlyReportDTO;
 import com.financetracker.api.dto.ReportExportRequest;
 import com.financetracker.api.dto.SummaryReportDTO;
-import com.financetracker.api.response.SuccessResponse;
+import com.financetracker.api.dto.response.SuccessResponse;
 import com.financetracker.api.service.serviceImpl.ReportServiceImpl;
 import io.jsonwebtoken.io.IOException;
 import jakarta.validation.Valid;

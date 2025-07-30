@@ -2,8 +2,8 @@ package com.financetracker.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.financetracker.api.enums.RoleName;
-import com.financetracker.api.request.NotificationSettingRequest;
-import com.financetracker.api.response.NotificationSettingResponse;
+import com.financetracker.api.dto.request.NotificationSettingRequest;
+import com.financetracker.api.dto.response.NotificationSettingResponse;
 import com.financetracker.api.security.CustomUserDetails;
 import com.financetracker.api.service.NotificationSettingService;
 import org.junit.jupiter.api.BeforeEach;
