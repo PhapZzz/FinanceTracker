@@ -2,10 +2,10 @@ package com.financetracker.api.controller;
 
 import com.financetracker.api.AuthUtil;
 import com.financetracker.api.enums.CategoryType;
-import com.financetracker.api.request.TransactionRequest;
-import com.financetracker.api.response.ApiResponse;
-import com.financetracker.api.response.TransactionHistoryResponse;
-import com.financetracker.api.response.TransactionResponse;
+import com.financetracker.api.dto.request.TransactionRequest;
+import com.financetracker.api.dto.response.ApiResponse;
+import com.financetracker.api.dto.response.TransactionHistoryResponse;
+import com.financetracker.api.dto.response.TransactionResponse;
 import com.financetracker.api.security.CustomUserDetails;
 import com.financetracker.api.service.TransactionService;
 import jakarta.validation.Valid;

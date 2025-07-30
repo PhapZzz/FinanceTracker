@@ -1,7 +1,7 @@
-package com.financetracker.api.request;
+package com.financetracker.api.dto.request;
 
 import com.financetracker.api.enums.CategoryType;
-import com.financetracker.api.response.ValidCategoryName;
+import com.financetracker.api.dto.response.ValidCategoryName;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

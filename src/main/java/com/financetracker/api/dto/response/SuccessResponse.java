@@ -1,4 +1,4 @@
-package com.financetracker.api.response;
+package com.financetracker.api.dto.response;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;

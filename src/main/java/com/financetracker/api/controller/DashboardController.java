@@ -1,9 +1,7 @@
 package com.financetracker.api.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.financetracker.api.dto.DashboardResponse;
-import com.financetracker.api.response.SuccessResponse;
+import com.financetracker.api.dto.response.SuccessResponse;
 import com.financetracker.api.service.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

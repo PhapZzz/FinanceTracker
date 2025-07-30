@@ -1,4 +1,4 @@
-package com.financetracker.api.request;
+package com.financetracker.api.dto.request;
 
 import com.financetracker.api.entity.CategoryIcon;
 import com.financetracker.api.repository.CategoryIconRepository;

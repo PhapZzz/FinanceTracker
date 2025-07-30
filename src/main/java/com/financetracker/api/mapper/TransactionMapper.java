@@ -3,8 +3,8 @@ package com.financetracker.api.mapper;
 import com.financetracker.api.entity.Category;
 import com.financetracker.api.entity.CategoryIcon;
 import com.financetracker.api.entity.Transaction;
-import com.financetracker.api.response.TransactionHistoryResponse;
-import com.financetracker.api.response.TransactionResponse;
+import com.financetracker.api.dto.response.TransactionHistoryResponse;
+import com.financetracker.api.dto.response.TransactionResponse;
 import org.springframework.stereotype.Component;
 
 @Component
