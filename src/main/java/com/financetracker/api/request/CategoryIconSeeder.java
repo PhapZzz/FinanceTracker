@@ -1,4 +1,4 @@
-package com.financetracker.api.seed;
+package com.financetracker.api.request;
 
 import com.financetracker.api.entity.CategoryIcon;
 import com.financetracker.api.repository.CategoryIconRepository;
