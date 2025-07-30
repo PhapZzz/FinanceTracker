@@ -1,5 +1,6 @@
-package com.financetracker.api.dto.request;
+package com.financetracker.api.request;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProfileRequest {
     @NotBlank(message = "Full name is required")
     private String fullName;

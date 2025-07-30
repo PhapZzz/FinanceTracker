@@ -1,4 +1,4 @@
-package com.financetracker.api.dto.request;
+package com.financetracker.api.request;
 
 import com.financetracker.api.entity.Role;
 import com.financetracker.api.enums.RoleName;

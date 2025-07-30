@@ -1,7 +1,7 @@
 package com.financetracker.api.security.Jwt.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.financetracker.api.dto.response.ErrorResponse;
+import com.financetracker.api.response.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.AccessDeniedException;

@@ -90,7 +90,7 @@ public class SecurityConfig {
 
 //                        )
                 .exceptionHandling(e -> e
-                        .authenticationEntryPoint(jwtAuthenticationEntryPoint) // ✅ Dùng entry point riêng
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint) //  Dùng entry point riêng
                         .accessDeniedHandler(jwtAccessDeniedHandler)
 
                         .accessDeniedHandler((req, res, ex) -> {

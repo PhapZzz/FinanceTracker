@@ -1,5 +1,6 @@
-package com.financetracker.api.dto.response;
+package com.financetracker.api.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor(staticName = "of")
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponse<T> {
     private boolean success;
     private String message;

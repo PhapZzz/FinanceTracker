@@ -1,4 +1,4 @@
 package com.financetracker.api.response;
 
-public class PaginatedResponse {
+public class PaganitionResponse {
 }

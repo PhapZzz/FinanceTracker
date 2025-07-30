@@ -1,5 +1,6 @@
-package com.financetracker.api.dto.response;
+package com.financetracker.api.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.financetracker.api.enums.CategoryType;
 import lombok.*;
 
@@ -19,6 +20,7 @@ public class CategoryResponse {
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Simple {
         private Long id;
         private String name;

@@ -2,7 +2,7 @@ package com.financetracker.api.mapper;
 
 import com.financetracker.api.entity.Category;
 import com.financetracker.api.entity.CategoryIcon;
-import com.financetracker.api.dto.response.CategoryResponse;
+import com.financetracker.api.response.CategoryResponse;
 import org.springframework.stereotype.Component;
 
 @Component

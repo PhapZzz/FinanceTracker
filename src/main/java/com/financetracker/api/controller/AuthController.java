@@ -1,10 +1,10 @@
 package com.financetracker.api.controller;
 
-import com.financetracker.api.dto.request.LoginRequest;
-import com.financetracker.api.dto.request.RegisterRequest;
-import com.financetracker.api.dto.response.LoginResponse;
-import com.financetracker.api.dto.response.SuccessResponse;
-import com.financetracker.api.dto.response.UserResponse;
+import com.financetracker.api.request.LoginRequest;
+import com.financetracker.api.request.RegisterRequest;
+import com.financetracker.api.response.LoginResponse;
+import com.financetracker.api.response.SuccessResponse;
+import com.financetracker.api.response.UserResponse;
 import com.financetracker.api.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

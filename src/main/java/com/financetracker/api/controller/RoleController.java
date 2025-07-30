@@ -1,7 +1,7 @@
 package com.financetracker.api.controller;
 
 import com.financetracker.api.dto.RoleDTO;
-import com.financetracker.api.dto.response.SuccessResponse;
+import com.financetracker.api.response.SuccessResponse;
 import com.financetracker.api.service.RoleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

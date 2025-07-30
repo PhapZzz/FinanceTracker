@@ -2,9 +2,9 @@ package com.financetracker.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.financetracker.api.enums.RoleName;
-import com.financetracker.api.dto.request.TransactionRequest;
-import com.financetracker.api.dto.response.TransactionHistoryResponse;
-import com.financetracker.api.dto.response.TransactionResponse;
+import com.financetracker.api.request.TransactionRequest;
+import com.financetracker.api.response.TransactionHistoryResponse;
+import com.financetracker.api.response.TransactionResponse;
 import com.financetracker.api.service.CustomUserDetails;
 import com.financetracker.api.service.TransactionService;
 import org.junit.jupiter.api.BeforeEach;

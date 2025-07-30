@@ -1,8 +1,8 @@
 package com.financetracker.api.exception;
 
 import com.financetracker.api.dto.FieldErrorDTO;
-import com.financetracker.api.dto.response.ApiResponse;
-import com.financetracker.api.dto.response.ErrorResponse;
+import com.financetracker.api.response.ApiResponse;
+import com.financetracker.api.response.ErrorResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;

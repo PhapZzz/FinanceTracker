@@ -1,4 +1,4 @@
-package com.financetracker.api.dto.request;
+package com.financetracker.api.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

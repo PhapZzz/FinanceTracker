@@ -1,8 +1,8 @@
 package com.financetracker.api.controller;
 
-import com.financetracker.api.dto.request.ProfileRequest;
-import com.financetracker.api.dto.response.ApiResponse;
-import com.financetracker.api.dto.response.UserResponse;
+import com.financetracker.api.request.ProfileRequest;
+import com.financetracker.api.response.ApiResponse;
+import com.financetracker.api.response.UserResponse;
 import com.financetracker.api.service.CustomUserDetails;
 import com.financetracker.api.security.Jwt.util.JwtTokenUtil;
 import com.financetracker.api.service.UserServiceImpl;

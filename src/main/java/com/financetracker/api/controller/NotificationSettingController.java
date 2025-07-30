@@ -1,7 +1,7 @@
 package com.financetracker.api.controller;
 
-import com.financetracker.api.dto.request.NotificationSettingRequest;
-import com.financetracker.api.dto.response.ApiResponse;
+import com.financetracker.api.request.NotificationSettingRequest;
+import com.financetracker.api.response.ApiResponse;
 import com.financetracker.api.service.CustomUserDetails;
 import com.financetracker.api.service.NotificationSettingService;
 import jakarta.validation.Valid;
